@@ -7,21 +7,32 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body id="loginBody">
-    <div class="login-container">
-        <h2>Entrar</h2>
-        <form class="login-form" onsubmit="login(); return false;">
-            <div class="input-group">
-                <label for="username">Usuário</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="input-group">
-                <label for="password">Senha</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <input type="submit" value="Entrar" class="login-button">
-            <a href="#" id="forgotPassword" onclick="forgotPassword()" class="forgot-password">Esqueceu sua senha?</a>
-        </form>
+    <div class="login-wrapper">
+        <!-- LADO ESQUERDO: LOGIN -->
+        <div class="login-container">
+            <h2>Entrar</h2>
+            <form class="login-form" onsubmit="login(); return false;">
+                <div class="input-group">
+                    <label for="username">Usuário</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <input type="submit" value="Entrar" class="login-button">
+                <a href="#" id="forgotPassword" onclick="forgotPassword()" class="forgot-password">Esqueceu sua senha?</a>
+                <p id="loginError" style="color:red; display:none;">Usuário ou senha incorretos!</p>
+            </form>
+        </div>
+
+        <!-- LADO DIREITO: BANNER -->
+        <div class="login-banner">
+            <h1>Controle de Estoque</h1>
+            <p>Gestão eficiente e segura do laboratório.</p>
+        </div>
     </div>
     <script src="assets/js/script.js"></script>
 </body>
+
 </html>

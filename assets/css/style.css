@@ -7,66 +7,79 @@
 
 /* ---------- TELA DE LOGIN ----------*/
 
-#loginBody{
+/* ---------- BODY ---------- */
+#loginBody {
+    min-height: 100vh;
     display: flex;
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: center; /* Centraliza verticalmente */
-    min-height: 100vh; /* Ocupa a altura total da viewport */
-    background-color: #f4f7f6; /* Cor de fundo suave */
+    justify-content: center;
+    align-items: center;
+    background: #f4f7f6;
+    padding: 20px;
 }
 
- .login-container {
-    background-color: #ffffff; 
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); 
+/* ---------- WRAPPER ---------- */
+.login-wrapper {
+    display: flex;
     width: 100%;
-    max-width: 380px;
+    max-width: 1100px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+/* ---------- LOGIN CONTAINER ---------- */
+.login-container {
+    flex: 1;
+    padding: 40px;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-container h2 {
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 28px;
     text-align: center;
 }
 
-/* 4. Título */
-h2 {
-    margin-bottom: 30px;
-    color: #333;
-}
-
-/* 5. Agrupamento de Inputs */
+/* ---------- INPUTS ---------- */
 .input-group {
     margin-bottom: 20px;
-    text-align: left;
 }
 
 .input-group label {
-    display: block; /* Garante que o rótulo ocupe a linha toda */
+    display: block;
     margin-bottom: 8px;
     color: #555;
     font-size: 14px;
     font-weight: bold;
 }
 
-/* 6. Estilo dos Campos de Entrada */
 .input-group input {
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
-    border-radius: 6px; /* Bordas levemente arredondadas */
+    border-radius: 6px;
     font-size: 16px;
-    transition: border-color 0.3s; /* Transição suave para o efeito de foco */
+    transition: border-color 0.3s;
 }
 
 .input-group input:focus {
-    border-color: #007bff; /* Cor azul suave ao focar */
-    outline: none; /* Remove o contorno padrão do navegador */
+    border-color: #007bff;
+    outline: none;
 }
 
-/* 7. Estilo do Botão */
+/* ---------- BOTÃO ---------- */
 .login-button {
     width: 100%;
     padding: 12px;
     border: none;
     border-radius: 6px;
-    background-color: #007bff; /* Azul primário moderno */
+    background-color: #007bff;
     color: white;
     font-size: 16px;
     font-weight: bold;
@@ -76,20 +89,99 @@ h2 {
 }
 
 .login-button:hover {
-    background-color: #0056b3; /* Escurece um pouco ao passar o mouse */
+    background-color: #0056b3;
 }
 
-/* 8. Link de Senha */
+/* ---------- LINK DE ESQUECEU SENHA ---------- */
 .forgot-password {
     display: block;
     margin-top: 20px;
     font-size: 14px;
     color: #007bff;
-    text-decoration: none; /* Remove o sublinhado */
+    text-decoration: none;
+    text-align: center;
 }
 
 .forgot-password:hover {
     text-decoration: underline;
+}
+
+/* ---------- MENSAGEM DE ERRO ---------- */
+#loginError {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+    display: none;
+}
+
+/* ---------- LOGIN BANNER ---------- */
+.login-banner {
+    flex: 1;
+    background: linear-gradient(135deg, #007bff, #00c6ff);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    text-align: center;
+}
+
+.login-banner h1 {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.login-banner p {
+    font-size: 18px;
+    max-width: 300px;
+}
+
+/* ---------- RESPONSIVIDADE ---------- */
+
+/* Tablets */
+@media (max-width: 992px) {
+    .login-wrapper {
+        flex-direction: column;
+        max-width: 480px;
+    }
+
+    .login-banner {
+        display: none;
+    }
+
+    .login-container {
+        border-radius: 12px;
+        padding: 35px;
+    }
+
+    .login-container h2 {
+        font-size: 26px;
+    }
+
+    .input-group input,
+    .login-button {
+        font-size: 16px;
+        padding: 12px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .login-container {
+        padding: 30px;
+    }
+
+    .login-container h2 {
+        font-size: 24px;
+    }
+
+    .input-group input,
+    .login-button {
+        font-size: 14px;
+        padding: 10px;
+    }
 }
 
  /* ---------- PÁGINA PRINCIPAL ----------  */
