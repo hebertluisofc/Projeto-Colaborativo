@@ -1,43 +1,83 @@
+/* ---------- VARIÁVEIS ---------- */
+:root {
+    --color-primary: #0e4194;
+    --color-primary-light: #a3bde6;
+    --color-secondary: #c04b15;
+    --color-red: #ff3131;
+    --color-yellow: #ffeb3b;
+    --color-green: #4caf50;
+    --color-white: #f4f7f6;
+    --color-black: #000;
+}
+
+/* ---------- FONTES ---------- */
+@font-face {
+    font-family: 'Roboto Slab';
+    src: url('../fonts/RobotoSlab-Bold.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif; /* Inclui padding e border na largura total dos elementos */
+    font-family: 'Roboto Slab', serif;
 }
 
-/* ---------- TELA DE LOGIN ----------*/
+/* ---------- TELAS ---------- */
 
-/* ---------- BODY ---------- */
+/* BODY LOGIN */
 #loginBody {
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #f4f7f6;
     padding: 20px;
+    background: linear-gradient(
+        135deg,
+        var(--color-primary) 0%,
+        var(--color-secondary) 50%,
+        var(--color-white) 50%,
+        var(--color-white) 100%
+    );
 }
 
-/* ---------- WRAPPER ---------- */
+/* WRAPPER LOGIN */
 .login-wrapper {
     display: flex;
     width: 100%;
     max-width: 1100px;
-    background: white;
+    background: var(--color-white);
     border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     overflow: hidden;
     transition: all 0.3s ease-in-out;
 }
 
-/* ---------- LOGIN CONTAINER ---------- */
+/* LOGIN CONTAINER */
 .login-container {
     flex: 1;
     padding: 40px;
-    background: #ffffff;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
 }
+
+.login-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url(../images/backgroundMaker.jpg);
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+    z-index: 0;
+}
+
+.login-container > * { position: relative; z-index: 1; }
 
 .login-container h2 {
     margin-bottom: 30px;
@@ -46,10 +86,8 @@
     text-align: center;
 }
 
-/* ---------- INPUTS ---------- */
-.input-group {
-    margin-bottom: 20px;
-}
+/* INPUTS */
+.input-group { margin-bottom: 20px; }
 
 .input-group label {
     display: block;
@@ -69,18 +107,29 @@
 }
 
 .input-group input:focus {
-    border-color: #007bff;
+    border-color: var(--color-primary);
     outline: none;
 }
 
-/* ---------- BOTÃO ---------- */
+/* PASSWORD VISUALIZER */
+.password-wrapper { position: relative; display: flex; align-items: center; }
+.password-wrapper input { width: 100%; padding-right: 40px; }
+.show-password {
+    position: absolute;
+    right: 25px;
+    cursor: pointer;
+    font-size: 18px;
+    user-select: none;
+}
+
+/* BOTÃO LOGIN */
 .login-button {
     width: 100%;
     padding: 12px;
     border: none;
     border-radius: 6px;
-    background-color: #007bff;
-    color: white;
+    background-color: var(--color-primary);
+    color: var(--color-white);
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
@@ -88,25 +137,21 @@
     margin-top: 10px;
 }
 
-.login-button:hover {
-    background-color: #0056b3;
-}
+.login-button:hover { background-color: var(--color-primary-light); }
 
-/* ---------- LINK DE ESQUECEU SENHA ---------- */
+/* LINK ESQUECEU SENHA */
 .forgot-password {
     display: block;
     margin-top: 20px;
     font-size: 14px;
-    color: #007bff;
+    color: var(--color-primary);
     text-decoration: none;
     text-align: center;
 }
 
-.forgot-password:hover {
-    text-decoration: underline;
-}
+.forgot-password:hover { text-decoration: underline; }
 
-/* ---------- MENSAGEM DE ERRO ---------- */
+/* MENSAGEM DE ERRO */
 #loginError {
     color: red;
     font-size: 14px;
@@ -115,11 +160,11 @@
     display: none;
 }
 
-/* ---------- LOGIN BANNER ---------- */
+/* LOGIN BANNER */
 .login-banner {
     flex: 1;
-    background: linear-gradient(135deg, #007bff, #00c6ff);
-    color: white;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+    color: var(--color-white);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -128,169 +173,163 @@
     text-align: center;
 }
 
-.login-banner h1 {
-    font-size: 32px;
-    margin-bottom: 15px;
-}
+.login-banner h1 { font-size: 32px; margin-bottom: 15px; }
+.login-banner p { font-size: 18px; max-width: 300px; }
 
-.login-banner p {
-    font-size: 18px;
-    max-width: 300px;
-}
-
-/* ---------- RESPONSIVIDADE ---------- */
-
-/* Tablets */
+/* RESPONSIVIDADE LOGIN */
 @media (max-width: 992px) {
-    .login-wrapper {
-        flex-direction: column;
-        max-width: 480px;
-    }
-
-    .login-banner {
-        display: none;
-    }
-
-    .login-container {
-        border-radius: 12px;
-        padding: 35px;
-    }
-
-    .login-container h2 {
-        font-size: 26px;
-    }
-
+    .login-wrapper { flex-direction: column; max-width: 480px; }
+    .login-banner { display: none; }
+    .login-container { padding: 35px; border-radius: 12px; }
+    .login-container h2 { font-size: 26px; }
     .input-group input,
-    .login-button {
-        font-size: 16px;
-        padding: 12px;
-    }
+    .login-button { font-size: 16px; padding: 12px; }
 }
 
-/* Mobile */
 @media (max-width: 600px) {
-    .login-container {
-        padding: 30px;
-    }
-
-    .login-container h2 {
-        font-size: 24px;
-    }
-
+    .login-container { padding: 30px; }
+    .login-container h2 { font-size: 24px; }
     .input-group input,
-    .login-button {
-        font-size: 14px;
-        padding: 10px;
-    }
+    .login-button { font-size: 14px; padding: 10px; }
 }
 
- /* ---------- PÁGINA PRINCIPAL ----------  */
-
+/* ---------- PÁGINA PRINCIPAL ---------- */
 #mainPageBody {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     min-height: 100vh;
-    background-color: #f4f7f6;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-white);
 }
 
-/* ---------- HEADER ---------- */
-header {
-    background-color: #4CAF50;
+#mainPageBody::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url(../images/backgroundMaker.jpg);
+    background-position: center;
+    opacity: 0.1;
+    z-index: 0;
+}
+
+#mainPageBody > * { position: relative; z-index: 1; }
+
+/* HEADER */
+#headerMainPage {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
     width: 100%;
-    color: white;
+}
+
+#headerMainPage h1,
+#headerMainPage h2 {
+    font-family: 'Roboto Slab', serif;
     text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    padding: 20px 0;
+    color: var(--color-white);
 }
 
-/* ---------- CARROSSEL ---------- */
-.containerCarrousel {
-    width: 100%;
+#headerMainPage h1 { font-size: 2.5em; }
+#headerMainPage h2 { font-size: 1.5em; }
+
+/* CARROSSEL */
+.containerCarrousel { width: 100%; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+.containerSlider { display: flex; align-items: center; justify-content: center; gap: 10px; width: 80%; overflow: hidden; }
+.slider { flex: 0 0 100%; display: none; }
+.slider.on { display: block; }
+.slider img { width: 100%; border-radius: 8px; }
+.buttonsCarrousel { flex: 0 0 40px; border: none; background-color: var(--color-white); cursor: pointer; padding: 5px; border-radius: 6px; }
+.buttonsCarrousel img { width: 100%; height: 100%; }
+
+/* ---------- ARMÁRIOS ---------- */
+.bodyPageCabinet { display: flex; flex-direction: column; justify-content: space-between; align-items: center; min-height: 100vh; }
+#bodyCabinet1 { background-color: var(--color-primary-light); }
+#bodyCabinet2 { background-color: #ff5c5c; }
+#bodyCabinet3 { background-color: #f8ec7d; }
+#bodyCabinet4 { background-color: var(--color-green); }
+
+.headerPageCabinet { display: flex; justify-content: center; align-items: center; text-align: center; width: 100%; }
+.title h1 { font-family: 'Roboto Slab', serif; font-size: 2.5em; color: var(--color-white); }
+
+.buttonBackHeader { position: fixed; top: 11px; left: 16px; }
+.buttonBackHeader img { width: 30px; height: 30px; }
+
+#headerPageCabinet1 { background-color: var(--color-primary); }
+#headerPageCabinet2 { background-color: #a20909; }
+#headerPageCabinet3 { background-color: #8f8103; }
+#headerPageCabinet4 { background-color: #004703; }
+
+.containerCabinet { display: grid; grid-template-columns: repeat(3,1fr); width: 100%; height: 70vh; }
+.cabinetColumn1,
+.cabinetColumn2,
+.cabinetColumn3 { display: grid; grid-template-rows: repeat(4,1fr); }
+
+/* CÉLULAS */
+.cell {
+    background: linear-gradient(145deg, #fff, #f0f0f0);
+    height: 15vh;
+    margin: 10px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    transition: transform 0.3s, box-shadow 0.3s;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #ffeb3b;
-    padding: 20px 0;
-    overflow: hidden;
-}
-
-.containerSlider {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px; /* Espaço entre slides */
-    width: 80%;
-    overflow: hidden;
-}
-
-/* Cada slide */
-.slider {
-    flex: 0 0 100%; /* mobile: 1 slide */
-    display: none;  /* JS controla o slide ativo */
-    transition: transform 0.5s ease;
-}
-
-.slider.on {
-    display: block;
-}
-
-.slider img {
-    width: 100%;
-    border-radius: 8px;
-}
-
-/* Botões de navegação */
-.buttonsCarrousel {
-    flex: 0 0 40px;
-    border: none;
-    background-color: #007bff;
     cursor: pointer;
-    padding: 5px;
-    border-radius: 6px;
+    padding: 10px;
 }
 
-.buttonsCarrousel img {
-    width: 100%;
-    height: 100%;
+.cell:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
 
-/* ---------- FOOTER ---------- */
-footer {
-    background-color: #f1f1f1;
-    text-align: center;
-    width: 100%;
-    font-size: 14px;
+.cell h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.cell p {
+    font-size: 1rem;
+    font-weight: 500;
     color: #555;
-    line-height: 1.6;
-    padding: 10px 0;
+    background-color: rgba(0,0,0,0.05);
+    padding: 4px 8px;
+    border-radius: 8px;
+    min-width: 40px;
+    text-align: center;
 }
+
+/* Cores das células */
+.cellRed { background: linear-gradient(145deg, #ff6b6b, #ff4c4c); }
+.cellYellow { background: linear-gradient(145deg, #fff176, #ffeb3b); }
+.cellGreen { background: linear-gradient(145deg, #81c784, #4caf50); }
+
+/* FOOTER */
+footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+    text-align: center;
+}
+footer p { color: var(--color-white); font-size: 12px; padding: 5px 0 5px 5px; }
+footer img { width: 120px; height: auto; }
 
 /* ---------- RESPONSIVIDADE ---------- */
-
-/* Tablet: mostrar 2 slides */
-@media (min-width: 600px) and (max-width: 991px) {
-    .slider {
-        flex: 0 0 48%;
-    }
+@media (min-width: 600px) and (max-width: 932px) {
+    #headerMainPage { height: 20vh; }
+    .slider { flex: 0 0 48%; }
 }
 
-/* Desktop: mostrar 4 slides */
-@media (min-width: 992px) {
-    .containerSlider {
-        justify-content: space-between;
-        width: 90%;
-    }
-
-    .slider {
-        flex: 0 0 23%;
-        display: block !important; /* todos visíveis */
-    }
-
-    /* Oculta botões */
-    #next, #back {
-        display: none;
-    }
+@media (min-width: 933px) {
+    #headerMainPage { height: 15vh; }
+    .containerSlider { justify-content: space-between; width: 100%; }
+    .slider { flex: 0 0 23%; display: block !important; }
+    #next, #back { display: none; }
 }

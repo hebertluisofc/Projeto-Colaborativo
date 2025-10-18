@@ -1,27 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOGIN</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body id="loginBody">
     <div class="login-wrapper">
         <!-- LADO ESQUERDO: LOGIN -->
         <div class="login-container">
-            <h2>Entrar</h2>
+            <h2>Bem-Vindo(a)!</h2>
             <form class="login-form" onsubmit="login(); return false;">
                 <div class="input-group">
-                    <label for="username">Usuário</label>
+                    <label for="username">Usuário:</label>
                     <input type="text" id="username" name="username" required>
                 </div>
                 <div class="input-group">
-                    <label for="password">Senha</label>
-                    <input type="password" id="password" name="password" required>
+                    <label for="password">Senha:</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" name="password" required>
+                        <span class="show-password" onmousedown="togglePassword(true)" onmouseup="togglePassword(false)"
+                            onmouseleave="togglePassword(false)">👁️</span>
+                    </div>
                 </div>
+
                 <input type="submit" value="Entrar" class="login-button">
-                <a href="#" id="forgotPassword" onclick="forgotPassword()" class="forgot-password">Esqueceu sua senha?</a>
+                <a href="#" id="forgotPassword" onclick="forgotPassword()" class="forgot-password">Esqueceu sua
+                    senha?</a>
                 <p id="loginError" style="color:red; display:none;">Usuário ou senha incorretos!</p>
             </form>
         </div>
@@ -29,7 +37,9 @@
         <!-- LADO DIREITO: BANNER -->
         <div class="login-banner">
             <h1>Controle de Estoque</h1>
-            <p>Gestão eficiente e segura do laboratório.</p>
+            <p>Gestão eficiente e segura do Laboratório Maker SENAI</p>
+            <br><br>
+            <img src="/assets/images/senailogo.png" alt="logomarca SENAI">
         </div>
     </div>
     <script src="assets/js/script.js"></script>

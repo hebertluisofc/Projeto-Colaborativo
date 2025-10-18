@@ -1,11 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Armário 1</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
-    <h1>Armário 1</h1>
+<!-- ARMÁRIO 1 -->
+<!-- IDs DAS CÉLULAS DESSE ARMÁRIO TERMINAM EM "Cabinet1" -->
+
+<body id="bodyCabinet1" class="bodyPageCabinet">
+
+    <header id="headerPageCabinet1" class="headerPageCabinet">
+        <a class="buttonBackHeader" href="/mainPage.html">
+            <img src="../images/backHeaderCabinet.png" alt="home">
+        </a>
+        <div class="title">
+             <h1>ARMÁRIO 1</h1>
+        </div>
+    </header>
+
+    <div class="containerCabinet">
+
+        <div class="cabinetColumn1">
+            <div id="cell1Column1Cabinet1" class="cell cellYellow" onclick="abrirPopup(this)" data-product="Fusível" data-amount="25">
+                <h3>Fusível</h3>
+                <p>25</p>
+            </div>
+
+            <div id="cell2Column1Cabinet1" class="cell cellYellow" onclick="abrirPopup(this)" data-product="Relé acoplador" data-amount="43">
+                <h3>Relé acoplador</h3>
+                <p>43</p>
+            </div>
+
+            <div id="cell3Column1Cabinet1" class="cell cellYellow" onclick="abrirPopup(this)" data-product="Chave alavanca" data-amount="12">
+                <h3>Chave alavanca</h3>
+                <p>12</p>
+            </div>
+
+            <div id="cell4Column1Cabinet1" class="cell cellRed" onclick="abrirPopup(this)" data-product="Cilindro pneumático" data-amount="9">
+                <h3>Cilindro pneumático</h3>
+                <p>9</p>
+            </div>
+        </div>
+
+        <div class="cabinetColumn2">
+            <div id="cell1Column2Cabinet1" class="cell cellRed" onclick="abrirPopup(this)" data-product="Marcador de cabo" data-amount="7">
+                <h3>Marcador de cabo</h3>
+                <p>7</p>
+            </div>
+
+            <div id="cell2Column2Cabinet1" class="cell cellRed" onclick="abrirPopup(this)" data-product="Sensor capacitivo" data-amount="9">
+                <h3>Sensor capacitivo</h3>
+                <p>9</p>
+            </div>
+
+            <div id="cell3Column2Cabinet1" class="cell cellYellow" onclick="abrirPopup(this)" data-product="Sensor de fim de curso" data-amount="14">
+                <h3>Sensor de fim de curso</h3>
+                <p>14</p>
+            </div>
+
+            <div id="cell4Column2Cabinet1" class="cell cellRed" onclick="abrirPopup(this)" data-product="Sinaleiro azul" data-amount="5">
+                <h3>Sinaleiro azul</h3>
+                <p>5</p>
+            </div>
+        </div>
+
+        <div class="cabinetColumn3">
+            <div id="cell1Column3Cabinet1" class="cell cellRed" onclick="abrirPopup(this)" data-product="Sinaleiro verde" data-amount="4">
+                <h3>Sinaleiro verde</h3>
+                <p>4</p>
+            </div>
+
+            <div id="cell2Column3Cabinet1" class="cell cellRed" onclick="abrirPopup(this)" data-product="Sinaleiro branco" data-amount="6">
+                <h3>Sinaleiro branco</h3>
+                <p>6</p>
+            </div>
+
+            <div id="cell3Column3Cabinet1" class="cell cellGreen" onclick="abrirPopup(this)" data-product="Dobradiça de acrílico" data-amount="69">
+                <h3>Dobradiça de acrílico</h3>
+                <p>69</p>
+            </div>
+
+            <div id="cell4Column3Cabinet1" class="cell cellGreen" onclick="abrirPopup(this)" data-product="Terminal de fio" data-amount="123">
+                <h3>Terminal de fio</h3>
+                <p>123</p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <div>
+            <p>Desenvolvido por alunos do módulo 3 do curso Técnico em Desenvolvimento de Sistemas em 2025</p>
+        </div>
+        <div>
+            <img src="../images/senailogo.png" alt="logomarca SENAI">
+        </div>
+    </footer>
+
+    <script src="../js/script.js" defer></script>
 </body>
+
 </html>
