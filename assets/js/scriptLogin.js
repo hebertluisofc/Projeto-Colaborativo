@@ -5,7 +5,7 @@ function login() {
     const errorMsg = document.getElementById("loginError");
 
     if (username === "admin" && password === "password") {
-        window.location.href = "mainPage.html";
+        window.location.href = "assets/pages/mainPage.html";
     } else {
         errorMsg.style.display = "block";
     }
