@@ -1,0 +1,192 @@
+/* ---------- VARIÁVEIS ---------- */
+:root {
+    --color-primary: #0e4194;
+    --color-primary-light: #a3bde6;
+    --color-white: #f4f7f6;
+}
+
+/* ---------- RESET / FONTES ---------- */
+@font-face {
+    font-family: 'Roboto Slab';
+    src: url('../fonts/RobotoSlab-Bold.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto Slab', serif;
+}
+
+/* ---------- PÁGINA PRINCIPAL ---------- */
+#mainPageBody {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--color-white);
+    padding-top: 15vh;   /* espaço para header fixo */
+    padding-bottom: 10vh; /* espaço para footer fixo */
+    position: relative;
+    z-index: 0;
+}
+
+#mainPageBody::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(../images/backgroundMaker.jpg);
+    background-position: center;
+    background-size: cover;
+    opacity: 0.1;
+    z-index: -1;
+}
+
+/* HEADER FIXO */
+#headerMainPage {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 15vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+#headerMainPage h1,
+#headerMainPage h2 {
+    font-family: 'Roboto Slab', serif;
+    text-align: center;
+    color: var(--color-white);
+    margin: 0;
+}
+
+#headerMainPage h1 { font-size: 2.2em; }
+#headerMainPage h2 { font-size: 1.3em; }
+
+/* CARROSSEL / SLIDER */
+.containerCarrousel {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.containerSlider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 90%;
+    overflow: hidden;
+}
+
+.slider {
+    display: none;
+    flex: 0 0 100%;
+    text-align: center;
+}
+
+.slider.on {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slider img {
+    width: 90%;
+    border-radius: 8px;
+}
+
+/* BOTÕES DO CARROSSEL */
+.buttonsCarrousel {
+    border: none;
+    background-color: var(--color-white);
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 6px;
+}
+
+.buttonsCarrousel img {
+    width: 30px;
+    height: 30px;
+}
+
+/* FOOTER FIXO */
+.footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    align-items: center;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+    text-align: center;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.footer p {
+    color: var(--color-white);
+    font-size: 12px;
+    margin: 0;
+}
+
+.footer img {
+    width: 100px;
+    height: auto;
+}
+
+/* ---------- RESPONSIVIDADE ---------- */
+
+/* WEB (≥992px) → 4 sliders lado a lado */
+@media (min-width: 992px) {
+    .containerSlider {
+        justify-content: space-between;
+    }
+    .slider {
+        display: block !important;
+        flex: 0 0 23%;
+    }
+    #next,
+    #back {
+        display: none !important;
+    }
+
+    .containerCabinet {
+        margin-top: 8px;
+    }
+}
+
+/* TABLET (600px – 991px) → 2 sliders */
+@media (min-width: 600px) and (max-width: 991px) {
+    .slider {
+        flex: 0 0 50%;
+    }
+
+    .containerCabinet {
+        margin-top: 30px;
+    }
+}
+
+/* MOBILE (<600px) → 1 slider */
+@media (max-width: 599px) {
+    .slider {
+        flex: 0 0 100%;
+    }
+
+    .containerCabinet {
+        margin-top: 30px;
+    }
+}

@@ -5,46 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Armário 4</title>
-    <link rel="stylesheet" href="../css/style.css">
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCB44213O-GvromzmBPXwcinKvles_cHjQ",
-            authDomain: "sistema-de-logistica-senai.firebaseapp.com",
-            projectId: "sistema-de-logistica-senai",
-            storageBucket: "sistema-de-logistica-senai.firebasestorage.app",
-            messagingSenderId: "880816206545",
-            appId: "1:880816206545:web:5ba5ce825e23c0fbcc8bf0"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-
-        // 🔹 Função para salvar no banco
-        window.salvarEstoque = (cabinetId, cellId, produto, quantidade) => {
-            set(ref(db, `cabinets/${cabinetId}/${cellId}`), {
-                produto: produto,
-                quantidade: quantidade
-            });
-        };
-
-        // 🔹 Função para ouvir atualizações em tempo real
-        window.ouvirEstoque = (cabinetId, atualizarUI) => {
-            const cabinetRef = ref(db, `cabinets/${cabinetId}`);
-            onValue(cabinetRef, (snapshot) => {
-                const dados = snapshot.val();
-                if (dados) atualizarUI(dados);
-            });
-        };
-    </script>
+    <link rel="stylesheet" href="../css/styleCabinets.css">
+    <script type="module" src="../js/scriptCabinets.js"></script>
 </head>
 
-<body id="bodyCabinet4" class="bodyPageCabinet">
+<body id="Cabinet4" class="bodyPageCabinet" style="background-color: var(--color-green);">
 
-    <header id="headerPageCabinet4" class="headerPageCabinet">
+    <header id="headerPageCabinet4" class="headerPageCabinet" style="background-color: #004703;">
         <a class="buttonBackHeader" href="/mainPage.html">
             <img src="../images/backHeaderCabinet.png" alt="Voltar para página principal">
         </a>
@@ -57,74 +24,26 @@
 
         <!-- COLUNA 1 -->
         <div class="cabinetColumn1">
-            <div id="cell1Column1Cabinet4" class="cell cellYellow" onclick="abrirPopup(this)"
-                data-product="Botoeira vermelha" data-amount="14">
-                <h3>Botoeira vermelha</h3>
-                <p>14</p>
-            </div>
-            <div id="cell2Column1Cabinet4" class="cell cellRed" onclick="abrirPopup(this)" data-product="Botoeira dupla"
-                data-amount="7">
-                <h3>Botoeira dupla</h3>
-                <p>7</p>
-            </div>
-            <div id="cell3Column1Cabinet4" class="cell cellYellow" onclick="abrirPopup(this)"
-                data-product="Dobradiça de aço" data-amount="19">
-                <h3>Dobradiça de aço</h3>
-                <p>19</p>
-            </div>
-            <div id="cell4Column1Cabinet4" class="cell cellRed" onclick="abrirPopup(this)"
-                data-product="Sensor de pressão" data-amount="10">
-                <h3>Sensor de pressão</h3>
-                <p>10</p>
-            </div>
+            <div id="cell1Column1Cabinet4" class="cell"></div>
+            <div id="cell2Column1Cabinet4" class="cell"></div>
+            <div id="cell3Column1Cabinet4" class="cell"></div>
+            <div id="cell4Column1Cabinet4" class="cell"></div>
         </div>
 
         <!-- COLUNA 2 -->
         <div class="cabinetColumn2">
-            <div id="cell1Column2Cabinet4" class="cell cellYellow" onclick="abrirPopup(this)"
-                data-product="Botoeira verde" data-amount="25">
-                <h3>Botoeira verde</h3>
-                <p>25</p>
-            </div>
-            <div id="cell2Column2Cabinet4" class="cell cellYellow" onclick="abrirPopup(this)"
-                data-product="Conexão pneumática" data-amount="37">
-                <h3>Conexão pneumática</h3>
-                <p>37</p>
-            </div>
-            <div id="cell3Column2Cabinet4" class="cell cellRed" onclick="abrirPopup(this)" data-product="ITEM"
-                data-amount="4">
-                <h3>ITEM</h3>
-                <p>4</p>
-            </div>
-            <div id="cell4Column2Cabinet4" class="cell cellRed" onclick="abrirPopup(this)"
-                data-product="Borne banana macho" data-amount="5">
-                <h3>Borne banana macho</h3>
-                <p>5</p>
-            </div>
+            <div id="cell1Column2Cabinet4" class="cell"></div>
+            <div id="cell2Column2Cabinet4" class="cell"></div>
+            <div id="cell3Column2Cabinet4" class="cell"></div>
+            <div id="cell4Column2Cabinet4" class="cell"></div>
         </div>
 
         <!-- COLUNA 3 -->
         <div class="cabinetColumn3">
-            <div id="cell1Column3Cabinet4" class="cell cellGreen" onclick="abrirPopup(this)" data-product="Cabo Jumper"
-                data-amount="247">
-                <h3>Cabo Jumper</h3>
-                <p>247</p>
-            </div>
-            <div id="cell2Column3Cabinet4" class="cell cellRed" onclick="abrirPopup(this)"
-                data-product="Sensor indutivo" data-amount="9">
-                <h3>Sensor indutivo</h3>
-                <p>9</p>
-            </div>
-            <div id="cell3Column3Cabinet4" class="cell cellYellow" onclick="abrirPopup(this)"
-                data-product="Borne de encadernação" data-amount="45">
-                <h3>Borne de encadernação</h3>
-                <p>45</p>
-            </div>
-            <div id="cell4Column3Cabinet4" class="cell cellGreen" onclick="abrirPopup(this)"
-                data-product="Borne banana fêmea" data-amount="62">
-                <h3>Borne banana fêmea</h3>
-                <p>62</p>
-            </div>
+            <div id="cell1Column3Cabinet4" class="cell"></div>
+            <div id="cell2Column3Cabinet4" class="cell"></div>
+            <div id="cell3Column3Cabinet4" class="cell"></div>
+            <div id="cell4Column3Cabinet4" class="cell"></div>
         </div>
 
     </div>
@@ -139,8 +58,6 @@
         </div>
     </footer>
 
-    <!-- Script principal -->
-    <script src="../js/script.js" defer></script>
 </body>
 
 </html>
