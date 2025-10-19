@@ -37,6 +37,7 @@
             var(--color-secondary) 50%,
             var(--color-white) 50%,
             var(--color-white) 100%);
+    background-repeat: no-repeat;
 }
 
 .login-wrapper {
