@@ -11,12 +11,30 @@ function login() {
     }
 }
 
-// Mostrar/esconder senha
-function togglePassword(show) {
+// ---------- Mostrar/esconder senha ---------- //
+document.addEventListener("DOMContentLoaded", () => {
+    const togglePassword = document.getElementById("togglePassword");
     const passwordInput = document.getElementById("password");
-    passwordInput.type = show ? "text" : "password";
+
+    if (togglePassword && passwordInput) {
+        togglePassword.addEventListener("click", () => {
+            const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+            passwordInput.setAttribute("type", type);
+            togglePassword.textContent = type === "password" ? "😑" : "😳";
+        });
+    } else {
+        console.warn("togglePassword ou passwordInput não encontrados!");
+    }
+});
+function showArmario(index) {
+    hideSlider(); // esconde todos
+    currentSlide = index;
+    slider[currentSlide].classList.add('on');
+    initSlider(); // recalcula tamanho e visibilidade
 }
 
+
+// ---------- Esqueci a senha ---------- //
 function forgotPassword() {
     forgotPasswordPopup();
 }
@@ -76,92 +94,75 @@ function forgotPasswordPopup() {
     });
 }
 
-// ---------- CARROSSEL ---------- //
-const slider = document.querySelectorAll('.slider');
-const next = document.getElementById('next');
-const back = document.getElementById('back');
-let currentSlide = 0;
+// ---------- MAIN PAGE CARROSSEL ---------- //
 
-function hideSlider() {
-    slider.forEach(item => item.classList.remove('on'));
+// Seletores
+const sliders = document.querySelectorAll(".slider");
+const btnNext = document.getElementById("next");
+const btnBack = document.getElementById("back");
+
+let currentIndex = 0;    // índice atual do carrossel
+let itemsPerView = getItemsPerView(); // quantos itens aparecem na tela
+
+// Função: descobre quantos itens devem aparecer dependendo do viewport
+function getItemsPerView() {
+    const width = window.innerWidth;
+    if (width >= 992) return 4; // Desktop
+    if (width >= 600) return 2; // Tablet
+    return 1;                   // Mobile
 }
 
-function initSlider() {
-    const width = window.innerWidth;
+// Função: atualiza a exibição dos slides
+function showSlides() {
+    sliders.forEach((slide, i) => {
+        slide.classList.remove("on");
+        slide.style.display = "none";
+    });
 
-    if (width >= 992) {
-        slider.forEach(item => item.classList.add('on'));
-        next.style.display = "none";
-        back.style.display = "none";
-    } else {
-        slider.forEach(item => item.classList.remove('on'));
-        currentSlide = 0;
-
-        const visibleSlides = width >= 600 ? 2 : 1;
-        for (let i = 0; i < visibleSlides && i < slider.length; i++) {
-            slider[i].classList.add('on');
-        }
-
-        next.style.display = "block";
-        back.style.display = "block";
+    // Mostra os itens correspondentes ao currentIndex
+    for (let i = 0; i < itemsPerView; i++) {
+        let index = (currentIndex + i) % sliders.length;
+        sliders[index].classList.add("on");
+        sliders[index].style.display = "flex";
     }
 }
 
-function nextSlider() {
-    const width = window.innerWidth;
-    const visibleSlides = width >= 600 ? 2 : 1;
-
-    hideSlider();
-    currentSlide += visibleSlides;
-    if (currentSlide >= slider.length) currentSlide = 0;
-
-    for (let i = currentSlide; i < currentSlide + visibleSlides && i < slider.length; i++) {
-        slider[i].classList.add('on');
-    }
+// Funções de navegação
+function nextSlide() {
+    currentIndex = (currentIndex + itemsPerView) % sliders.length;
+    showSlides();
 }
 
-function backSlider() {
-    const width = window.innerWidth;
-    const visibleSlides = width >= 600 ? 2 : 1;
-
-    hideSlider();
-    currentSlide -= visibleSlides;
-    if (currentSlide < 0) currentSlide = slider.length - visibleSlides;
-
-    for (let i = currentSlide; i < currentSlide + visibleSlides && i < slider.length; i++) {
-        slider[i].classList.add('on');
-    }
+function prevSlide() {
+    currentIndex = (currentIndex - itemsPerView + sliders.length) % sliders.length;
+    showSlides();
 }
 
-next.addEventListener('click', nextSlider);
-back.addEventListener('click', backSlider);
-window.addEventListener('resize', initSlider);
-window.addEventListener('load', initSlider);
+// Event listeners
+btnNext?.addEventListener("click", nextSlide);
+btnBack?.addEventListener("click", prevSlide);
+
+// Recalcular quando a tela for redimensionada
+window.addEventListener("resize", () => {
+    itemsPerView = getItemsPerView();
+    currentIndex = 0; // reseta para o início
+    showSlides();
+});
+
+// Inicialização
+showSlides();
 
 // ---------- POPUP DE ESTOQUE ---------- //
 function abrirPopup(elemento) {
     const nomeProduto = elemento.dataset.product;
     let quantidadeEstoque = parseInt(elemento.dataset.amount);
+    let valorAtual = 0;
 
     const popupFundo = document.createElement("div");
-    Object.assign(popupFundo.style, {
-        position: "fixed", top: 0, left: 0,
-        width: "100vw", height: "100vh",
-        backgroundColor: "rgba(0,0,0,0.6)",
-        display: "flex", justifyContent: "center", alignItems: "center",
-        zIndex: 1000
-    });
+    Object.assign(popupFundo.style, { position:"fixed", top:0, left:0, width:"100vw", height:"100vh", backgroundColor:"rgba(0,0,0,0.6)", display:"flex", justifyContent:"center", alignItems:"center", zIndex:1000 });
 
     const popup = document.createElement("div");
-    Object.assign(popup.style, {
-        background: "#fff",
-        padding: "20px",
-        borderRadius: "12px",
-        textAlign: "center",
-        minWidth: "300px",
-        boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-        fontFamily: "Arial, sans-serif"
-    });
+    Object.assign(popup.style, { background:"#fff", padding:"20px", borderRadius:"12px", textAlign:"center", minWidth:"300px", boxShadow:"0 4px 12px rgba(0,0,0,0.3)", fontFamily:"Arial, sans-serif" });
 
     const titulo = document.createElement("h2");
     titulo.textContent = nomeProduto;
@@ -169,170 +170,97 @@ function abrirPopup(elemento) {
     const estoqueInfo = document.createElement("p");
     estoqueInfo.textContent = `Estoque atual: ${quantidadeEstoque}`;
 
-    let valorAtual = 0;
     const valorDisplay = document.createElement("span");
     valorDisplay.textContent = valorAtual;
-    Object.assign(valorDisplay.style, {
-        margin: "0 20px", fontSize: "26px", fontWeight: "bold", color: "#000"
-    });
+    Object.assign(valorDisplay.style, { margin:"0 20px", fontSize:"26px", fontWeight:"bold", color:"#000" });
 
     function atualizarPreview() {
-        estoqueInfo.textContent = `Estoque final previsto: ${quantidadeEstoque + valorAtual}`;
-        valorDisplay.style.color = valorAtual < 0 ? "#dc3545" : valorAtual > 0 ? "#28a745" : "#000";
+        const final = quantidadeEstoque + valorAtual;
+        estoqueInfo.textContent = `Estoque final previsto: ${final}`;
+        valorDisplay.style.color = final < 0 ? "#dc3545" : final > 0 ? "#28a745" : "#000";
     }
 
-    function estilizarBotao(botao, cor) {
-        Object.assign(botao.style, {
-            width: "50px", height: "50px",
-            borderRadius: "50%",
-            fontSize: "22px",
-            fontWeight: "bold",
-            border: "none",
-            cursor: "pointer",
-            backgroundColor: cor,
-            color: "#fff",
-            transition: "0.2s"
-        });
-        botao.onmouseover = () => botao.style.opacity = "0.8";
-        botao.onmouseout = () => botao.style.opacity = "1";
+    function criarBotao(texto, cor, fn) {
+        const b = document.createElement("button");
+        b.textContent = texto;
+        Object.assign(b.style, { width:"50px", height:"50px", borderRadius:"50%", fontSize:"22px", fontWeight:"bold", border:"none", cursor:"pointer", backgroundColor:cor, color:"#fff", transition:"0.2s" });
+        b.onmouseover = () => b.style.opacity="0.8";
+        b.onmouseout = () => b.style.opacity="1";
+        b.onclick = fn;
+        return b;
     }
 
-    const botaoMais = document.createElement("button");
-    botaoMais.textContent = "+";
-    estilizarBotao(botaoMais, "#28a745");
-    botaoMais.onclick = () => { valorAtual++; valorDisplay.textContent = valorAtual; atualizarPreview(); };
-
-    const botaoMenos = document.createElement("button");
-    botaoMenos.textContent = "−";
-    estilizarBotao(botaoMenos, "#dc3545");
-    botaoMenos.onclick = () => { 
-        if (valorAtual > -quantidadeEstoque) { 
-            valorAtual--; valorDisplay.textContent = valorAtual; atualizarPreview(); 
-        } 
-    };
+    const botaoMenos = criarBotao("−", "#dc3545", () => { if(quantidadeEstoque + valorAtual -1 >=0){ valorAtual--; valorDisplay.textContent=valorAtual; atualizarPreview(); } });
+    const botaoMenos10 = criarBotao("-10", "#dc3545", () => { if(quantidadeEstoque + valorAtual -10 >=0){ valorAtual-=10; valorDisplay.textContent=valorAtual; atualizarPreview(); } });
+    const botaoMais = criarBotao("+", "#28a745", () => { valorAtual++; valorDisplay.textContent=valorAtual; atualizarPreview(); });
+    const botaoMais10 = criarBotao("+10", "#28a745", () => { valorAtual+=10; valorDisplay.textContent=valorAtual; atualizarPreview(); });
 
     const botoesContainer = document.createElement("div");
-    Object.assign(botoesContainer.style, {
-        margin: "15px 0",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-    });
-    botoesContainer.append(botaoMenos, valorDisplay, botaoMais);
+    Object.assign(botoesContainer.style,{ margin:"15px 0", display:"flex", alignItems:"center", justifyContent:"center", gap:"10px"});
+    botoesContainer.append(botaoMenos10, botaoMenos, valorDisplay, botaoMais, botaoMais10);
+
+    // Função para atualizar cores das células
+    function atualizarCor(celula, qtd){
+        celula.classList.remove("cellRed","cellYellow","cellGreen");
+        if(qtd <= 10) celula.classList.add("cellRed");
+        else if(qtd <= 50) celula.classList.add("cellYellow");
+        else celula.classList.add("cellGreen");
+    }
 
     const botoesAcoes = document.createElement("div");
-    Object.assign(botoesAcoes.style, {
-        display: "flex",
-        justifyContent: "space-between",
-        gap: "10px",
-        marginTop: "15px"
-    });
-
-    const botaoConfirmar = document.createElement("button");
-    botaoConfirmar.textContent = "Confirmar";
-    Object.assign(botaoConfirmar.style, {
-        flex: "1", padding: "10px",
-        border: "none", borderRadius: "8px",
-        backgroundColor: "#007bff", color: "white",
-        fontSize: "16px", cursor: "pointer"
-    });
+    Object.assign(botoesAcoes.style,{ display:"flex", justifyContent:"space-between", gap:"10px", marginTop:"15px" });
 
     const botaoCancelar = document.createElement("button");
-    botaoCancelar.textContent = "Cancelar";
-    Object.assign(botaoCancelar.style, {
-        flex: "1", padding: "10px",
-        border: "none", borderRadius: "8px",
-        backgroundColor: "#6c757d", color: "white",
-        fontSize: "16px", cursor: "pointer"
-    });
+    botaoCancelar.textContent="Cancelar";
+    Object.assign(botaoCancelar.style,{ flex:"1", padding:"10px", border:"none", borderRadius:"8px", backgroundColor:"#6c757d", color:"#fff", fontSize:"16px", cursor:"pointer" });
+    botaoCancelar.onclick = () => popupFundo.remove();
 
-    // ---------- CONFIRMAÇÃO COM BOTÃO DESFAZER ----------
+    const botaoConfirmar = document.createElement("button");
+    botaoConfirmar.textContent="Confirmar";
+    Object.assign(botaoConfirmar.style,{ flex:"1", padding:"10px", border:"none", borderRadius:"8px", backgroundColor:"#007bff", color:"#fff", fontSize:"16px", cursor:"pointer" });
+
     botaoConfirmar.onclick = () => {
-        // Cria popup de confirmação
         const popupFundoConfirm = document.createElement("div");
-        Object.assign(popupFundoConfirm.style, {
-            position: "fixed",
-            top: 0, left: 0,
-            width: "100vw", height: "100vh",
-            backgroundColor: "rgba(0,0,0,0.6)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 1100
-        });
+        Object.assign(popupFundoConfirm.style, { position:"fixed", top:0, left:0, width:"100vw", height:"100vh", backgroundColor:"rgba(0,0,0,0.6)", display:"flex", justifyContent:"center", alignItems:"center", zIndex:1100 });
 
         const popupConfirm = document.createElement("div");
-        Object.assign(popupConfirm.style, {
-            background: "#fff",
-            padding: "20px",
-            borderRadius: "12px",
-            minWidth: "300px",
-            textAlign: "center",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-            fontFamily: "Arial, sans-serif"
-        });
+        Object.assign(popupConfirm.style, { background:"#fff", padding:"20px", borderRadius:"12px", minWidth:"300px", textAlign:"center", boxShadow:"0 4px 12px rgba(0,0,0,0.3)", fontFamily:"Arial, sans-serif" });
 
         const mensagem = document.createElement("p");
-        if (valorAtual > 0) mensagem.textContent = `Você vai adicionar ${valorAtual} unidade(s) de ${nomeProduto}.`;
-        else if (valorAtual < 0) mensagem.textContent = `Você vai remover ${-valorAtual} unidade(s) de ${nomeProduto}.`;
-        else mensagem.textContent = `Nenhuma alteração será feita no estoque de ${nomeProduto}.`;
+        if(valorAtual>0) mensagem.textContent=`Você vai adicionar ${valorAtual} unidade(s) de ${nomeProduto}.`;
+        else if(valorAtual<0) mensagem.textContent=`Você vai remover ${-valorAtual} unidade(s) de ${nomeProduto}.`;
+        else mensagem.textContent=`Nenhuma alteração será feita no estoque de ${nomeProduto}.`;
 
         const btnContainer = document.createElement("div");
-        Object.assign(btnContainer.style, {
-            display: "flex",
-            justifyContent: "space-between",
-            gap: "10px",
-            marginTop: "15px"
-        });
+        Object.assign(btnContainer.style, { display:"flex", justifyContent:"space-between", gap:"10px", marginTop:"15px" });
 
         const btnConfirmarFinal = document.createElement("button");
-        btnConfirmarFinal.textContent = "Confirmar";
-        Object.assign(btnConfirmarFinal.style, {
-            flex: "1", padding: "10px",
-            border: "none", borderRadius: "8px",
-            backgroundColor: "#007bff", color: "white",
-            fontSize: "16px", cursor: "pointer"
-        });
+        btnConfirmarFinal.textContent="Confirmar";
+        Object.assign(btnConfirmarFinal.style,{ flex:"1", padding:"10px", border:"none", borderRadius:"8px", backgroundColor:"#007bff", color:"white", fontSize:"16px", cursor:"pointer" });
 
         const btnDesfazer = document.createElement("button");
-        btnDesfazer.textContent = "Desfazer";
-        Object.assign(btnDesfazer.style, {
-            flex: "1", padding: "10px",
-            border: "none", borderRadius: "8px",
-            backgroundColor: "#dc3545", color: "white",
-            fontSize: "16px", cursor: "pointer"
-        });
+        btnDesfazer.textContent="Desfazer";
+        Object.assign(btnDesfazer.style,{ flex:"1", padding:"10px", border:"none", borderRadius:"8px", backgroundColor:"#dc3545", color:"white", fontSize:"16px", cursor:"pointer" });
 
         btnConfirmarFinal.onclick = () => {
-            // Aplica alteração
             quantidadeEstoque += valorAtual;
             elemento.dataset.amount = quantidadeEstoque;
-
-            const p = elemento.querySelector("p");
-            if (p) p.textContent = quantidadeEstoque;
-
-            elemento.classList.remove("cellRed", "cellYellow", "cellGreen");
-            if (quantidadeEstoque <= 10) elemento.classList.add("cellRed");
-            else if (quantidadeEstoque <= 50) elemento.classList.add("cellYellow");
-            else elemento.classList.add("cellGreen");
-
-            document.body.removeChild(popupFundoConfirm);
-            document.body.removeChild(popupFundo);
+            elemento.querySelector("p").textContent = quantidadeEstoque;
+            atualizarCor(elemento, quantidadeEstoque);
+            const cabinetId = document.body.id.replace("body", "");
+            salvarEstoque(cabinetId, elemento.id, elemento.dataset.product, quantidadeEstoque);
+            popupFundoConfirm.remove();
+            popupFundo.remove();
         };
 
-        btnDesfazer.onclick = () => document.body.removeChild(popupFundoConfirm);
+        btnDesfazer.onclick = () => popupFundoConfirm.remove();
 
         btnContainer.append(btnDesfazer, btnConfirmarFinal);
         popupConfirm.append(mensagem, btnContainer);
         popupFundoConfirm.appendChild(popupConfirm);
         document.body.appendChild(popupFundoConfirm);
-
-        popupFundoConfirm.addEventListener("click", e => {
-            if (e.target === popupFundoConfirm) document.body.removeChild(popupFundoConfirm);
-        });
+        popupFundoConfirm.addEventListener("click", e => { if(e.target===popupFundoConfirm) popupFundoConfirm.remove(); });
     };
-
-    botaoCancelar.onclick = () => document.body.removeChild(popupFundo);
 
     popup.append(titulo, estoqueInfo, botoesContainer);
     botoesAcoes.append(botaoCancelar, botaoConfirmar);
@@ -340,8 +268,41 @@ function abrirPopup(elemento) {
     popupFundo.appendChild(popup);
     document.body.appendChild(popupFundo);
 
-    popupFundo.addEventListener("click", e => {
-        if (e.target === popupFundo) document.body.removeChild(popupFundo);
-    });
+    popupFundo.addEventListener("click", e => { if(e.target===popupFundo) popupFundo.remove(); });
 }
-// ---------- FIM DO CÓDIGO ---------- //
+
+
+
+
+// ---------- OUVIR ATUALIZAÇÕES EM TEMPO REAL ---------- //
+
+window.onload = () => {
+    const cabinetId = document.body.id.replace("body", ""); // ex: Cabinet1, Cabinet2...
+    
+    ouvirEstoque(cabinetId, (dados) => {
+        for (const cellId in dados) {
+            const item = dados[cellId];
+            const celula = document.getElementById(cellId);
+
+            if (celula) {
+                // Atualiza os dados
+                celula.dataset.product = item.produto;
+                celula.dataset.amount = item.quantidade;
+
+                // Atualiza título e quantidade na tela
+                celula.querySelector("h3").textContent = item.produto;
+                celula.querySelector("p").textContent = item.quantidade;
+
+                // Atualiza cores
+                celula.classList.remove("cellRed","cellYellow","cellGreen");
+                if(item.quantidade <= 10) celula.classList.add("cellRed");
+                else if(item.quantidade <= 50) celula.classList.add("cellYellow");
+                else celula.classList.add("cellGreen");
+            }
+        }
+    });
+};
+
+
+// ---------- FIM DO CÓDIGO ----------
+

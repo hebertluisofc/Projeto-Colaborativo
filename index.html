@@ -22,13 +22,13 @@
                     <label for="password">Senha:</label>
                     <div class="password-wrapper">
                         <input type="password" id="password" name="password" required>
-                        <span class="show-password" onmousedown="togglePassword(true)" onmouseup="togglePassword(false)"
-                            onmouseleave="togglePassword(false)">👁️</span>
+                        <span class="show-password" id="togglePassword">😑</span>
                     </div>
+
                 </div>
 
                 <input type="submit" value="Entrar" class="login-button">
-                <a href="#" id="forgotPassword" onclick="forgotPassword()" class="forgot-password">Esqueceu sua
+                <a id="forgotPassword" onclick="forgotPassword()" class="forgot-password">Esqueceu sua
                     senha?</a>
                 <p id="loginError" style="color:red; display:none;">Usuário ou senha incorretos!</p>
             </form>

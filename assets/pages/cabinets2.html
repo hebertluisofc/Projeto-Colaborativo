@@ -6,102 +6,137 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Armário 2</title>
     <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Firebase v12 Módulos -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCB44213O-GvromzmBPXwcinKvles_cHjQ",
+            authDomain: "sistema-de-logistica-senai.firebaseapp.com",
+            projectId: "sistema-de-logistica-senai",
+            storageBucket: "sistema-de-logistica-senai.firebasestorage.app",
+            messagingSenderId: "880816206545",
+            appId: "1:880816206545:web:5ba5ce825e23c0fbcc8bf0"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // 🔹 Função para salvar no banco
+        window.salvarEstoque = (cabinetId, cellId, produto, quantidade) => {
+            set(ref(db, `cabinets/${cabinetId}/${cellId}`), {
+                produto: produto,
+                quantidade: quantidade
+            });
+        };
+
+        // 🔹 Função para ouvir atualizações em tempo real
+        window.ouvirEstoque = (cabinetId, atualizarUI) => {
+            const cabinetRef = ref(db, `cabinets/${cabinetId}`);
+            onValue(cabinetRef, (snapshot) => {
+                const dados = snapshot.val();
+                if (dados) atualizarUI(dados);
+            });
+        };
+    </script>
 </head>
-<!-- ARMÁRIO 2-->
-<!-- IDs DAS CÉLULAS DESSE ARMÁRIO TERMINAM EM "Cabinet2 -->
 
 <body id="bodyCabinet2" class="bodyPageCabinet">
 
     <header id="headerPageCabinet2" class="headerPageCabinet">
-        <div class="buttonBackHeader">
-            <a href="/mainPage.html">
-                <img src="../images/backHeaderCabinet.png" alt="home">
-            </a>
-        </div>
+        <a class="buttonBackHeader" href="/mainPage.html">
+            <img src="../images/backHeaderCabinet.png" alt="home">
+        </a>
         <div class="title">
-             <h1>ARMÁRIO 2</h1>
+            <h1>ARMÁRIO 2</h1>
         </div>
     </header>
 
     <div class="containerCabinet">
-        
+        <!-- CELLS -->
         <div class="cabinetColumn1">
-            <div id="cell1Column1Cabinet2" class="cell cellGreen" onclick="abrirPopup(this)" data-product="Parafusos" data-amount="123">
+            <div id="cell1Column1Cabinet2" class="cell cellGreen" onclick="abrirPopup(this)" data-product="Parafusos"
+                data-amount="123">
                 <h3>Parafusos</h3>
                 <p>123</p>
             </div>
-
-            <div id="cell2Column1Cabinet2" class="cell cellRed" onclick="abrirPopup(this)" data-product="Válvula solenóide hidráulica" data-amount="3">
+            <div id="cell2Column1Cabinet2" class="cell cellRed" onclick="abrirPopup(this)"
+                data-product="Válvula solenóide hidráulica" data-amount="3">
                 <h3>Válvula solenóide hidráulica</h3>
                 <p>3</p>
             </div>
-
-            <div id="cell3Column1Cabinet2" class="cell cellRed" onclick="abrirPopup(this)" data-product="ITEM" data-amount="4">
+            <div id="cell3Column1Cabinet2" class="cell cellRed" onclick="abrirPopup(this)" data-product="ITEM"
+                data-amount="4">
                 <h3>ITEM</h3>
                 <p>4</p>
             </div>
-
-            <div id="cell4Column1Cabinet2" class="cell cellRed" onclick="abrirPopup(this)" data-product="Válvula solenóide pneumática" data-amount="3">
+            <div id="cell4Column1Cabinet2" class="cell cellRed" onclick="abrirPopup(this)"
+                data-product="Válvula solenóide pneumática" data-amount="3">
                 <h3>Válvula solenóide pneumática</h3>
                 <p>3</p>
             </div>
         </div>
 
         <div class="cabinetColumn2">
-            <div id="cell1Column2Cabinet2" class="cell cellYellow" onclick="abrirPopup(this)" data-product="Peças de metal" data-amount="14">
+            <div id="cell1Column2Cabinet2" class="cell cellYellow" onclick="abrirPopup(this)"
+                data-product="Peças de metal" data-amount="14">
                 <h3>Peças de metal</h3>
                 <p>14</p>
             </div>
-
-            <div id="cell2Column2Cabinet2" class="cell cellRed" onclick="abrirPopup(this)" data-product="Válvula solenóide pneumática" data-amount="3">
+            <div id="cell2Column2Cabinet2" class="cell cellRed" onclick="abrirPopup(this)"
+                data-product="Válvula solenóide pneumática" data-amount="3">
                 <h3>Válvula solenóide pneumática</h3>
                 <p>3</p>
             </div>
-
-            <div id="cell3Column2Cabinet2" class="cell cellYellow" onclick="abrirPopup(this)" data-product="Abraçadeira" data-amount="40">
+            <div id="cell3Column2Cabinet2" class="cell cellYellow" onclick="abrirPopup(this)" data-product="Abraçadeira"
+                data-amount="40">
                 <h3>Abraçadeira</h3>
                 <p>40</p>
             </div>
-
-            <div id="cell4Column2Cabinet2" class="cell cellYellow" onclick="abrirPopup(this)" data-product="ITEM" data-amount="12">
+            <div id="cell4Column2Cabinet2" class="cell cellYellow" onclick="abrirPopup(this)" data-product="ITEM"
+                data-amount="12">
                 <h3>ITEM</h3>
                 <p>12</p>
             </div>
         </div>
 
         <div class="cabinetColumn3">
-            <div id="cell1Column3Cabinet2" class="cell cellRed" onclick="abrirPopup(this)" data-product="ITEM" data-amount="6">
+            <div id="cell1Column3Cabinet2" class="cell cellRed" onclick="abrirPopup(this)" data-product="ITEM"
+                data-amount="6">
                 <h3>ITEM</h3>
                 <p>6</p>
             </div>
-
-            <div id="cell2Column3Cabinet2" class="cell cellRed" onclick="abrirPopup(this)" data-product="ITEM" data-amount="3">
+            <div id="cell2Column3Cabinet2" class="cell cellRed" onclick="abrirPopup(this)" data-product="ITEM"
+                data-amount="3">
                 <h3>ITEM</h3>
                 <p>3</p>
             </div>
-
-            <div id="cell3Column3Cabinet2" class="cell cellRed" onclick="abrirPopup(this)" data-product="Conexão hidráulica" data-amount="10">
+            <div id="cell3Column3Cabinet2" class="cell cellRed" onclick="abrirPopup(this)"
+                data-product="Conexão hidráulica" data-amount="10">
                 <h3>Conexão hidráulica</h3>
                 <p>10</p>
             </div>
-
-            <div id="cell4Column3Cabinet2" class="cell cellYellow" onclick="abrirPopup(this)" data-product="Sinaleiro amarelo" data-amount="11">
+            <div id="cell4Column3Cabinet2" class="cell cellYellow" onclick="abrirPopup(this)"
+                data-product="Sinaleiro amarelo" data-amount="11">
                 <h3>Sinaleiro amarelo</h3>
                 <p>11</p>
             </div>
         </div>
-
     </div>
 
-   <footer>
+    <footer>
         <div>
-            <p>Desenvolvido por alunos do módulo 3 do curso Técnico em Desenvolvimento de Sistemas em 2025</p>
+            <p>Desenvolvido pelos alunos do Módulo III do Curso Técnico em Desenvolvimento de Sistemas em 2025 - todos
+                os direitos reservados ©</p>
         </div>
         <div>
             <img src="../images/senailogo.png" alt="logomarca SENAI">
         </div>
     </footer>
 
+    <!-- Script principal -->
     <script src="../js/script.js" defer></script>
 </body>
 
