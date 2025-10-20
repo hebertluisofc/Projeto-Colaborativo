@@ -63,62 +63,129 @@ export function abrirPopup(elemento) {
     function atualizarPreview() {
         const final = quantidadeEstoque + valorAtual;
         estoqueInfo.textContent = `Estoque final previsto: ${final}`;
-        valorDisplay.style.color = final < 0 ? "#dc3545" : final > 0 ? "#28a745" : "#000";
+
+        if (valorAtual > 0) {
+            valorDisplay.style.color = "#28a745"; // verde
+        } else if (valorAtual < 0) {
+            valorDisplay.style.color = "#dc3545"; // vermelho
+        } else {
+            valorDisplay.style.color = "#000"; // preto
+        }
     }
 
     function criarBotao(texto, cor, fn) {
         const b = document.createElement("button");
         b.textContent = texto;
-        Object.assign(b.style, { width: "50px", height: "50px", borderRadius: "50%", fontSize: "22px", fontWeight: "bold", border: "none", cursor: "pointer", backgroundColor: cor, color: "#fff", transition: "0.2s" });
+        Object.assign(b.style, {
+            width: "50px", height: "50px", borderRadius: "50%",
+            fontSize: "22px", fontWeight: "bold", border: "none",
+            cursor: "pointer", backgroundColor: cor, color: "#fff", transition: "0.2s"
+        });
         b.onmouseover = () => b.style.opacity = "0.8";
         b.onmouseout = () => b.style.opacity = "1";
         b.onclick = fn;
         return b;
     }
 
-    const botaoMenos = criarBotao("−", "#dc3545", () => { if (quantidadeEstoque + valorAtual - 1 >= 0) { valorAtual--; valorDisplay.textContent = valorAtual; atualizarPreview(); } });
-    const botaoMenos10 = criarBotao("-10", "#dc3545", () => { if (quantidadeEstoque + valorAtual - 10 >= 0) { valorAtual -= 10; valorDisplay.textContent = valorAtual; atualizarPreview(); } });
-    const botaoMais = criarBotao("+", "#28a745", () => { valorAtual++; valorDisplay.textContent = valorAtual; atualizarPreview(); });
-    const botaoMais10 = criarBotao("+10", "#28a745", () => { valorAtual += 10; valorDisplay.textContent = valorAtual; atualizarPreview(); });
+    const botaoMenos = criarBotao("−", "#dc3545", () => {
+        if (quantidadeEstoque + valorAtual - 1 >= 0) {
+            valorAtual--;
+            valorDisplay.textContent = valorAtual;
+            atualizarPreview();
+        }
+    });
+
+    const botaoMenos10 = criarBotao("-10", "#dc3545", () => {
+        if (quantidadeEstoque + valorAtual - 10 >= 0) {
+            valorAtual -= 10;
+            valorDisplay.textContent = valorAtual;
+            atualizarPreview();
+        }
+    });
+
+    const botaoMais = criarBotao("+", "#28a745", () => {
+        valorAtual++;
+        valorDisplay.textContent = valorAtual;
+        atualizarPreview();
+    });
+
+    const botaoMais10 = criarBotao("+10", "#28a745", () => {
+        valorAtual += 10;
+        valorDisplay.textContent = valorAtual;
+        atualizarPreview();
+    });
 
     const botoesContainer = document.createElement("div");
-    Object.assign(botoesContainer.style, { margin: "15px 0", display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" });
+    Object.assign(botoesContainer.style, {
+        margin: "15px 0", display: "flex",
+        alignItems: "center", justifyContent: "center", gap: "10px"
+    });
     botoesContainer.append(botaoMenos10, botaoMenos, valorDisplay, botaoMais, botaoMais10);
 
     const botoesAcoes = document.createElement("div");
-    Object.assign(botoesAcoes.style, { display: "flex", justifyContent: "space-between", gap: "10px", marginTop: "15px" });
+    Object.assign(botoesAcoes.style, {
+        display: "flex", justifyContent: "space-between",
+        gap: "10px", marginTop: "15px"
+    });
 
     const botaoCancelar = document.createElement("button");
     botaoCancelar.textContent = "Cancelar";
-    Object.assign(botaoCancelar.style, { flex: "1", padding: "10px", border: "none", borderRadius: "8px", backgroundColor: "#6c757d", color: "#fff", fontSize: "16px", cursor: "pointer" });
+    Object.assign(botaoCancelar.style, {
+        flex: "1", padding: "10px", border: "none", borderRadius: "8px",
+        backgroundColor: "#6c757d", color: "#fff", fontSize: "16px", cursor: "pointer"
+    });
     botaoCancelar.onclick = () => popupFundo.remove();
 
     const botaoConfirmar = document.createElement("button");
     botaoConfirmar.textContent = "Confirmar";
-    Object.assign(botaoConfirmar.style, { flex: "1", padding: "10px", border: "none", borderRadius: "8px", backgroundColor: "#007bff", color: "#fff", fontSize: "16px", cursor: "pointer" });
+    Object.assign(botaoConfirmar.style, {
+        flex: "1", padding: "10px", border: "none", borderRadius: "8px",
+        backgroundColor: "#007bff", color: "#fff", fontSize: "16px", cursor: "pointer"
+    });
 
     botaoConfirmar.onclick = () => {
         const popupFundoConfirm = document.createElement("div");
-        Object.assign(popupFundoConfirm.style, { position: "fixed", top: 0, left: 0, width: "100vw", height: "100vh", backgroundColor: "rgba(0,0,0,0.6)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1100 });
+        Object.assign(popupFundoConfirm.style, {
+            position: "fixed", top: 0, left: 0, width: "100vw", height: "100vh",
+            backgroundColor: "rgba(0,0,0,0.6)", display: "flex",
+            justifyContent: "center", alignItems: "center", zIndex: 1100
+        });
 
         const popupConfirm = document.createElement("div");
-        Object.assign(popupConfirm.style, { background: "#fff", padding: "20px", borderRadius: "12px", minWidth: "300px", textAlign: "center", boxShadow: "0 4px 12px rgba(0,0,0,0.3)", fontFamily: "Arial, sans-serif" });
+        Object.assign(popupConfirm.style, {
+            background: "#fff", padding: "20px", borderRadius: "12px",
+            minWidth: "300px", textAlign: "center",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.3)", fontFamily: "Arial, sans-serif"
+        });
 
         const mensagem = document.createElement("p");
-        if (valorAtual > 0) mensagem.textContent = `Você vai adicionar ${valorAtual} unidade(s) de ${nomeProduto}.`;
-        else if (valorAtual < 0) mensagem.textContent = `Você vai remover ${-valorAtual} unidade(s) de ${nomeProduto}.`;
-        else mensagem.textContent = `Nenhuma alteração será feita no estoque de ${nomeProduto}.`;
+        if (valorAtual > 0) {
+            mensagem.innerHTML = `Você vai <span style="color:#28a745;font-weight:bold">adicionar</span> ${valorAtual} unidade(s) de ${nomeProduto}.`;
+        } else if (valorAtual < 0) {
+            mensagem.innerHTML = `Você vai <span style="color:#dc3545;font-weight:bold">remover</span> ${-valorAtual} unidade(s) de ${nomeProduto}.`;
+        } else {
+            mensagem.textContent = `Nenhuma alteração será feita no estoque de ${nomeProduto}.`;
+        }
 
         const btnContainer = document.createElement("div");
-        Object.assign(btnContainer.style, { display: "flex", justifyContent: "space-between", gap: "10px", marginTop: "15px" });
+        Object.assign(btnContainer.style, {
+            display: "flex", justifyContent: "space-between",
+            gap: "10px", marginTop: "15px"
+        });
 
         const btnConfirmarFinal = document.createElement("button");
         btnConfirmarFinal.textContent = "Confirmar";
-        Object.assign(btnConfirmarFinal.style, { flex: "1", padding: "10px", border: "none", borderRadius: "8px", backgroundColor: "#007bff", color: "white", fontSize: "16px", cursor: "pointer" });
+        Object.assign(btnConfirmarFinal.style, {
+            flex: "1", padding: "10px", border: "none", borderRadius: "8px",
+            backgroundColor: "#007bff", color: "white", fontSize: "16px", cursor: "pointer"
+        });
 
         const btnDesfazer = document.createElement("button");
         btnDesfazer.textContent = "Desfazer";
-        Object.assign(btnDesfazer.style, { flex: "1", padding: "10px", border: "none", borderRadius: "8px", backgroundColor: "#dc3545", color: "white", fontSize: "16px", cursor: "pointer" });
+        Object.assign(btnDesfazer.style, {
+            flex: "1", padding: "10px", border: "none", borderRadius: "8px",
+            backgroundColor: "#dc3545", color: "white", fontSize: "16px", cursor: "pointer"
+        });
 
         btnConfirmarFinal.onclick = () => {
             quantidadeEstoque += valorAtual;
@@ -137,7 +204,9 @@ export function abrirPopup(elemento) {
         popupConfirm.append(mensagem, btnContainer);
         popupFundoConfirm.appendChild(popupConfirm);
         document.body.appendChild(popupFundoConfirm);
-        popupFundoConfirm.addEventListener("click", e => { if (e.target === popupFundoConfirm) popupFundoConfirm.remove(); });
+        popupFundoConfirm.addEventListener("click", e => {
+            if (e.target === popupFundoConfirm) popupFundoConfirm.remove();
+        });
     };
 
     popup.append(titulo, estoqueInfo, botoesContainer);
@@ -147,6 +216,7 @@ export function abrirPopup(elemento) {
     document.body.appendChild(popupFundo);
     popupFundo.addEventListener("click", e => { if (e.target === popupFundo) popupFundo.remove(); });
 }
+
 
 // ---------- COR DAS CÉLULAS ----------
 function atualizarCor(celula, qtd) {
